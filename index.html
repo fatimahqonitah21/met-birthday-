@@ -1133,8 +1133,14 @@
       const wrong = document.getElementById("wrong-password");
 
       if (input.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
-        document.getElementById("password-screen").classList.add("hidden");
-        createConfetti();
+    document.getElementById("password-screen").classList.add("hidden");
+
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+    music.play();
+
+    createConfetti();
+      }
       } else {
         wrong.textContent = "Hmm… that's not the password 👀";
         input.value = "";
