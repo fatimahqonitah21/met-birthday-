@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Met Archive — Almost Six Years</title>
+  <meta name="description" content="A little archive of almost six years of friendship, memories, chaos and love." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #081827;
+      --navy-2: #102b43;
+      --blue: #7fa8c4;
+      --blue-light: #dcecf5;
+      --cream: #f7f4ee;
+      --pink: #e7b8bb;
+      --orange: #e5a16d;
+      --text: #10202d;
+      --muted: #667783;
+      --white: #ffffff;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --mono: "DM Mono", monospace;
+      --radius: 22px;
+      --shadow: 0 20px 60px rgba(5, 20, 35, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    button { font-family: inherit; }
+
+    /* PASSWORD */
+    #password-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(127,168,196,.2), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(231,184,187,.18), transparent 30%),
+        var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+    #password-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .password-box { width: min(460px, 100%); text-align: center; }
+    .tiny-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: 22px;
+    }
+    .password-box h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 10vw, 76px);
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .password-box p { color: rgba(255,255,255,.7); margin-bottom: 30px; }
+    .password-input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.08);
+      color: white;
+      border-radius: 999px;
+      padding: 15px 20px;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .password-input::placeholder { color: rgba(255,255,255,.4); }
+    .enter-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 15px 20px;
+      background: var(--blue-light);
+      color: var(--navy);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .enter-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+    #wrong-password { height: 24px; color: var(--pink); font-size: 13px; margin-top: 8px; }
+
+    /* GLOBAL */
+    .container { width: min(1100px, calc(100% - 40px)); margin: auto; }
+    section { padding: 110px 0; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.08;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .section-intro { max-width: 680px; font-size: 18px; color: var(--muted); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(8,24,39,.15);
+      background: transparent;
+      color: var(--text);
+      padding: 13px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .btn:hover { background: var(--navy); color: white; transform: translateY(-2px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      color: white;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(127,168,196,.25), transparent 28%),
+        radial-gradient(circle at 85% 70%, rgba(231,184,187,.22), transparent 30%),
+        linear-gradient(145deg, #06131f, #102b43 60%, #213c52);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      right: -180px;
+      top: -150px;
+      background: rgba(255,255,255,.04);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 850px; }
+    .hero-kicker {
+      font-family: var(--mono);
+      letter-spacing: 2px;
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: 25px;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(60px, 12vw, 150px);
+      line-height: .88;
+      font-weight: 500;
+      letter-spacing: -4px;
+      margin-bottom: 28px;
+    }
+    .hero-subtitle {
+      font-size: clamp(18px, 3vw, 25px);
+      max-width: 650px;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 38px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      opacity: .6;
+      margin-bottom: 35px;
+    }
+    .hero-meta span {
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 7px 12px;
+    }
+    .hero-btn {
+      background: white;
+      color: var(--navy);
+      border: none;
+      padding: 15px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,.25); }
+
+    /* INTRO */
+    .intro { background: var(--cream); }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 70px;
+      align-items: start;
+    }
+    .intro-number { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .intro-text {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.35;
+    }
+    .intro-text em { color: var(--navy-2); }
+
+    /* NAV CARDS */
+    .nav-section { background: var(--blue-light); }
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 50px;
+    }
+    .nav-card {
+      min-height: 190px;
+      padding: 25px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .25s ease, background .25s ease;
+    }
+    .nav-card:hover { transform: translateY(-6px); background: white; }
+    .nav-card-number { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .nav-card h3 { font-family: var(--serif); font-size: 28px; font-weight: 600; }
+    .nav-card p { font-size: 13px; color: var(--muted); }
+
+    /* TIMELINE */
+    .timeline-section { background: white; }
+    .timeline { margin-top: 65px; position: relative; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 17px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #d6dfe5;
+    }
+    .timeline-item { position: relative; padding-left: 65px; margin-bottom: 70px; }
+    .timeline-dot {
+      position: absolute;
+      left: 10px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--navy);
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 0 0 1px #ccd8df;
+    }
+    .timeline-year { font-family: var(--mono); font-size: 12px; color: var(--blue); margin-bottom: 8px; }
+    .timeline-item h3 { font-family: var(--serif); font-size: 32px; margin-bottom: 10px; }
+    .timeline-item p { max-width: 700px; color: var(--muted); }
+
+    /* LETTER */
+    .letter-section { background: var(--navy); color: white; }
+    .letter-section .section-label { color: rgba(255,255,255,.5); }
+    .letter-section .section-intro { color: rgba(255,255,255,.65); }
+    .letter { max-width: 800px; margin: 60px auto 0; font-size: 18px; color: rgba(255,255,255,.82); }
+    .letter p { margin-bottom: 25px; }
+    .letter strong { color: white; }
+    .highlight {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 46px);
+      color: white;
+      line-height: 1.25;
+      margin: 55px 0;
+    }
+
+    /* CARDS */
+    .self-section { background: var(--cream); }
+    .self-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 50px;
+    }
+    .self-card {
+      padding: 32px;
+      min-height: 260px;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform .25s ease;
+    }
+    .self-card:hover { transform: translateY(-5px); }
+    .self-card-number { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 35px; }
+    .self-card h3 { font-family: var(--serif); font-size: 30px; margin-bottom: 18px; }
+    .self-card p { color: var(--muted); }
+
+    /* OPEN WHEN */
+    .open-section { background: #eef5f8; }
+    .open-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 50px;
+    }
+    .open-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      min-height: 230px;
+      cursor: pointer;
+      border: 1px solid #e3eaee;
+      transition: .25s ease;
+    }
+    .open-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .envelope { font-size: 30px; margin-bottom: 25px; }
+    .open-card h3 { font-family: var(--serif); font-size: 25px; line-height: 1.2; margin-bottom: 10px; }
+    .open-card p { color: var(--muted); font-size: 14px; }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(4,14,24,.75);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal.active { display: flex; }
+    .modal-box {
+      width: min(680px, 100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      background: var(--cream);
+      border-radius: 25px;
+      padding: 35px;
+      position: relative;
+      animation: modalIn .3s ease;
+    }
+    @keyframes modalIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      border: none;
+      background: transparent;
+      font-size: 25px;
+      cursor: pointer;
+    }
+    .modal-box h2 {
+      font-family: var(--serif);
+      font-size: 40px;
+      margin-bottom: 20px;
+      padding-right: 30px;
+    }
+    .modal-box p { color: var(--muted); margin-bottom: 18px; }
+
+    /* MUSEUM */
+    .museum { background: white; }
+    .museum-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 55px;
+    }
+    .memory-card {
+      background: var(--cream);
+      padding: 12px;
+      transform: rotate(var(--rotation));
+      transition: transform .25s ease;
+    }
+    .memory-card:hover { transform: rotate(0deg) translateY(-5px); }
+    .memory-photo {
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, #d8e7ef, #f2d8d5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .memory-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .memory-caption { padding: 18px 8px 10px; }
+    .memory-caption strong { font-family: var(--serif); font-size: 20px; display: block; margin-bottom: 5px; }
+    .memory-caption span { font-size: 12px; color: var(--muted); }
+
+    /* IDENTITY */
+    .identity-section {
+      background: linear-gradient(145deg, #102b43, #7fa8c4 65%, #e5a16d);
+      color: white;
+    }
+    .identity-section .section-label { color: rgba(255,255,255,.6); }
+    .identity-section .section-intro { color: rgba(255,255,255,.75); }
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 55px;
+    }
+    .identity-card {
+      padding: 30px;
+      min-height: 220px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+    }
+    .identity-card small {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: .6;
+    }
+    .identity-card h3 { font-family: var(--serif); font-size: 34px; margin: 15px 0; }
+    .identity-card p { color: rgba(255,255,255,.75); }
+    .one-word { grid-column: 1 / -1; text-align: center; padding: 60px 20px; }
+    .one-word h3 { font-size: clamp(65px, 12vw, 140px); line-height: .9; margin: 15px 0; }
+
+    /* AWARDS */
+    .awards { background: var(--cream); }
+    .award-list { margin-top: 50px; display: grid; gap: 12px; }
+    .award {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 25px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,.04);
+    }
+    .award-icon { font-size: 25px; }
+    .award-text { font-family: var(--serif); font-size: 21px; }
+
+    /* FINAL */
+    .final {
+      min-height: 100vh;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    .final-content { max-width: 760px; margin: auto; }
+    .final h2 { font-family: var(--serif); font-size: clamp(45px, 8vw, 90px); line-height: 1; margin-bottom: 35px; }
+    .final p { color: rgba(255,255,255,.7); font-size: 18px; margin-bottom: 22px; }
+    .final-highlight {
+      font-family: var(--serif);
+      font-size: clamp(30px, 5vw, 50px);
+      color: white;
+      margin: 50px 0;
+    }
+    .signature { font-family: var(--serif); font-size: 25px; margin-top: 45px; }
+    .replay { margin-top: 40px; background: white; color: var(--navy); border: none; }
+
+    /* FOOTER */
+    footer {
+      background: #05111c;
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      padding: 25px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* CONFETTI */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      top: -20px;
+      z-index: 10000;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(720deg); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      section { padding: 80px 0; }
+      .intro-grid { grid-template-columns: 1fr; gap: 25px; }
+      .nav-grid, .open-grid, .museum-grid { grid-template-columns: 1fr 1fr; }
+      .self-grid, .identity-grid { grid-template-columns: 1fr; }
+      .one-word { grid-column: auto; }
+    }
+    @media (max-width: 550px) {
+      .container { width: min(100% - 28px, 1100px); }
+      .nav-grid, .open-grid, .museum-grid { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: -2px; }
+      .modal-box { padding: 28px 22px; }
+      .modal-box h2 { font-size: 32px; }
+      .award { align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PASSWORD -->
+  <div id="password-screen">
+    <div class="password-box">
+      <div class="tiny-label">private archive · access required</div>
+      <h1>For Met.</h1>
+      <p>
+        There is a little something inside.<br>
+        You know the password.
+      </p>
+      <input id="password-input" class="password-input" type="password" placeholder="enter the secret password" autocomplete="off" />
+      <button class="enter-btn" onclick="unlockArchive()">Enter the Archive →</button>
+      <div id="wrong-password"></div>
+    </div>
+  </div>
+
+  <main id="archive">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-kicker">an unofficial documentation of</div>
+          <h1>The Met<br>Archive</h1>
+          <p class="hero-subtitle">
+            Almost six years of friendship, questionable decisions,
+            gossip, memories, and a lot of love.
+          </p>
+          <div class="hero-meta">
+            <span>Almost Six Years</span>
+            <span>Instagram</span>
+            <span>Bestie Archive</span>
+            <span>∞</span>
+          </div>
+          <button class="hero-btn" onclick="document.getElementById('welcome').scrollIntoView()">Enter the archive ↓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro" id="welcome">
+      <div class="container">
+        <div class="intro-grid">
+          <div><div class="intro-number">FILE 001 · WELCOME</div></div>
+          <div class="intro-text">
+            <p>Hi, Met.</p>
+            <br>
+            <p>You asked me how valuable you are to me.</p>
+            <br>
+            <p>So instead of giving you one birthday paragraph, I decided to make an entire archive.</p>
+            <br>
+            <p>Because apparently <em>almost six years of friendship</em> cannot fit into one Instagram story.</p>
+            <br>
+            <p>And honestly… <em>we have way too much lore.</em></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION -->
+    <section class="nav-section">
+      <div class="container">
+        <div class="section-label">Explore</div>
+        <h2 class="section-title">Choose your<br>destination.</h2>
+        <div class="nav-grid">
+          <a href="#timeline" class="nav-card">
+            <div class="nav-card-number">01</div>
+            <h3>Our Lore</h3>
+            <p>How an Instagram interaction became almost six years.</p>
+          </a>
+          <a href="#letter" class="nav-card">
+            <div class="nav-card-number">02</div>
+            <h3>According to Me</h3>
+            <p>Who you are through my eyes.</p>
+          </a>
+          <a href="#self" class="nav-card">
+            <div class="nav-card-number">03</div>
+            <h3>Things You Don't See</h3>
+            <p>The things I notice about you.</p>
+          </a>
+          <a href="#open" class="nav-card">
+            <div class="nav-card-number">04</div>
+            <h3>Open When...</h3>
+            <p>For the days when you need a little reminder.</p>
+          </a>
+          <a href="#museum" class="nav-card">
+            <div class="nav-card-number">05</div>
+            <h3>Our Museum</h3>
+            <p>A collection of tiny pieces of us.</p>
+          </a>
+          <a href="#awards" class="nav-card">
+            <div class="nav-card-number">06</div>
+            <h3>Met Awards</h3>
+            <p>Completely unofficial. Extremely accurate.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" id="timeline">
+      <div class="container">
+        <div class="section-label">FILE 002 · OUR LORE</div>
+        <h2 class="section-title">Almost six years of<br>questionable history.</h2>
+        <p class="section-intro">
+          Some memories were important.
+          Some were completely unnecessary.
+          Somehow, I remember both.
+        </p>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">THE BEGINNING</div>
+            <h3>The Instagram Incident</h3>
+            <p>
+              It started from Instagram.
+              Somehow an online interaction turned into an almost six-year friendship.
+              We clearly had no idea what we were getting ourselves into.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">EARLY ERA</div>
+            <h3>The IPA → IPS Migration</h3>
+            <p>
+              We had barely started becoming friends and somehow
+              I ended up crossing from IPA to IPS.
+              Looking back, that was quite the commitment for a friendship
+              that had just started.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">SCHOOL ERA</div>
+            <h3>The Sosro Table</h3>
+            <p>
+              Pulang sekolah.
+              Curhat.
+              Meja Sosro dekat lapangan basket.
+              And you making fun of my legendary
+              mie + nasi lunch.
+              A dark era in my culinary history.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">PROM ERA</div>
+            <h3>The Prom Incident</h3>
+            <p>
+              You paid for my prom because you wanted me to be there.
+              I remember crying like crazy.
+              You came to my prom…
+              but didn't even enter the building.
+              I still have questions.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">CAR ERA</div>
+            <h3>The Mobile Therapy Room</h3>
+            <p>
+              So many conversations happened inside your car.
+              Curhat, McFlurry, random life updates,
+              gossip, and basically everything.
+              Also: the Margonda flyover incident.
+              The car survived. We survived. The lore survived.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">RANDOMLY PERSONAL ERA</div>
+            <h3>Things Best Friends Shouldn't Know</h3>
+            <p>
+              From serious life problems to your car-washing routine
+              and even the extremely important discussion of
+              what color underwear you were going to wear.
+              There are things that, once shared between best friends,
+              can never be unknown.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">NOW</div>
+            <h3>Still Here.</h3>
+            <p>
+              Almost six years later,
+              we're still here.
+              And honestly, I think that's pretty special.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section class="letter-section" id="letter">
+      <div class="container">
+        <div class="section-label">FILE 003 · MY PERSPECTIVE</div>
+        <h2 class="section-title">Met,<br>according to me.</h2>
+        <p class="section-intro">
+          Not necessarily who you think you are.
+          Just who I see when I look at you.
+        </p>
+
+        <div class="letter">
+          <p>
+            Met, jujur aku agak bingung harus mulai dari mana.
+            Kamu minta aku menulis perspektifku tentang kamu,
+            dan ternyata setelah dipikir-pikir,
+            banyak banget yang pengen aku tulis.
+          </p>
+
+          <p>
+            Kamu itu orang yang <strong>baik banget, tulus,
+            jujur, royal, dan straight to the point.</strong>
+            Kamu literally nggak bisa basa-basi.
+            Kalau suka ya suka, kalau nggak ya kelihatan.
+          </p>
+
+          <p>
+            Bahkan kamu nggak perlu ngomong kalau lagi kesel.
+            Ekspresi muka kamu biasanya sudah memberikan
+            spoiler lengkap.
+          </p>
+
+          <div class="highlight">
+            "Kamu tuh literally nggak bisa bohong.
+            Muka kamu selalu membocorkan semuanya."
+          </div>
+
+          <p>
+            Dan justru itu salah satu hal yang aku suka dari kamu.
+            Aku tahu kamu apa adanya.
+            Aku tahu kapan kamu senang, kesel, sedih,
+            awkward, atau lagi pura-pura biasa aja
+            padahal ekspresi muka kamu sudah cerita semuanya.
+          </p>
+
+          <p>
+            Menurutku kamu juga produktif dan cerdas.
+            Kamu punya drive yang mungkin nggak semua orang punya.
+            Dan aku sangat respect dengan bagaimana kamu
+            berusaha menjadi manusia yang bermanfaat.
+          </p>
+
+          <p>
+            Tapi ada satu hal yang kadang bikin aku kesel:
+            <strong>kamu terlalu baik.</strong>
+          </p>
+
+          <div class="highlight">
+            "MET PLEASE.
+            NGGAK SEMUA ORANG HARUS KAMU PEDULIKAN."
+          </div>
+
+          <p>
+            Kamu kadang masih bisa baik sama orang yang
+            sudah jelas-jelas pernah jahat atau mengecewakan kamu.
+            Dalam hati aku tuh kayak,
+            "Met, please belajar bodo amat sedikit."
+          </p>
+
+          <p>
+            Kamu juga suka menyimpulkan sesuatu sendiri
+            dan kadang gengsi untuk ngomong duluan.
+            Dan dulu mulut kamu benar-benar cabe rawit.
+            Straight to the point-nya kadang bukan lagi to the point,
+            tapi langsung nusuk sampai tulang.
+            Untung sekarang sudah lebih kalem.
+          </p>
+
+          <p>
+            Dan tentu saja…
+            <strong>gossip.</strong>
+            Aku tidak akan elaborate lebih jauh
+            karena kita sama-sama tahu.
+          </p>
+
+          <p>
+            Tapi di balik semua itu,
+            aku merasa kamu adalah orang yang genuine.
+            Kamu mungkin nggak selalu sadar bagaimana
+            tindakan kecil kamu bisa berarti besar buat orang lain.
+          </p>
+
+          <p>
+            Aku sampai sekarang masih pakai gelang Pandora dari kamu.
+            Kamera yang pernah kamu kasih masih aku simpan dan jaga.
+            Scrapbook yang kamu bikin juga masih aku simpan dengan baik.
+          </p>
+
+          <p>
+            Hal-hal itu mungkin terasa sederhana buat kamu,
+            tapi buat aku, semuanya menjadi bukti kecil bahwa
+            pernah ada seseorang yang memikirkan aku sedetail itu.
+          </p>
+
+          <p>
+            Aku masih ingat kamu jemput aku di GO setelah les,
+            makan roti di mobil.
+            Aku ingat kamu bayarin prom aku karena kamu ingin
+            aku bisa hadir.
+            Aku ingat PKKMB, nyanyi bareng di Balairung,
+            tiap pagi bareng kamu.
+          </p>
+
+          <p>
+            Aku ingat kita shalat di masjid komplek karena
+            aku malu ngajak kamu masuk rumah yang lagi berantakan.
+            Aku ingat McFlurry.
+            Curhat di mobil.
+            Sharing hal-hal random yang seharusnya nggak perlu diketahui.
+          </p>
+
+          <p>
+            Dan ternyata setelah bertahun-tahun,
+            hal-hal random itulah yang justru menjadi
+            beberapa kenangan yang paling aku sayang.
+          </p>
+
+          <div class="highlight">
+            "Almost six years later,
+            you're still one of my favorite people to remember."
+          </div>
+
+          <p>
+            Jadi kalau kamu bertanya seberapa valuable kamu
+            sebagai person dan sebagai friend:
+          </p>
+
+          <div class="highlight">"More than you probably realize."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELF CARDS -->
+    <section class="self-section" id="self">
+      <div class="container">
+        <div class="section-label">FILE 004 · THINGS YOU DON'T SEE</div>
+        <h2 class="section-title">Things I see in you<br>that you might not.</h2>
+
+        <div class="self-grid">
+          <div class="self-card" onclick="openModal('strong')">
+            <div class="self-card-number">01 · STRENGTH</div>
+            <h3>You are stronger than you think.</h3>
+            <p>Click to open.</p>
+          </div>
+
+          <div class="self-card" onclick="openModal('kind')">
+            <div class="self-card-number">02 · KINDNESS</div>
+            <h3>Your kindness has an impact.</h3>
+            <p>Click to open.</p>
+          </div>
+
+          <div class="self-card" onclick="openModal('inspire')">
+            <div class="self-card-number">03 · INSPIRATION</div>
+            <h3>You inspire people.</h3>
+            <p>Click to open.</p>
+          </div>
+
+          <div class="self-card" onclick="openModal('boundaries')">
+            <div class="self-card-number">04 · REMINDER</div>
+            <h3>You don't have to care about everyone.</h3>
+            <p>Yes, this one is specifically for you.</p>
+          </div>
+
+          <div class="self-card" onclick="openModal('loved')" style="grid-column: 1 / -1;">
+            <div class="self-card-number">05 · THE IMPORTANT ONE</div>
+            <h3>You are loved.</h3>
+            <p>Not because of what you accomplish. Simply because you're you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEN WHEN -->
+    <section class="open-section" id="open">
+      <div class="container">
+        <div class="section-label">FILE 005 · EMOTIONAL EMERGENCY KIT</div>
+        <h2 class="section-title">Open when…</h2>
+        <p class="section-intro">
+          For future Met.
+          Please save this page.
+          You may need it someday.
+        </p>
+
+        <div class="open-grid">
+          <div class="open-card" onclick="openModal('sad')">
+            <div class="envelope">💌</div>
+            <h3>you're sad</h3>
+            <p>A little reminder that you are not alone.</p>
+          </div>
+
+          <div class="open-card" onclick="openModal('not-enough')">
+            <div class="envelope">🫂</div>
+            <h3>you feel like you're not enough</h3>
+            <p>Read this before believing that thought.</p>
+          </div>
+
+          <div class="open-card" onclick="openModal('miss-me')">
+            <div class="envelope">🚗</div>
+            <h3>you miss me</h3>
+            <p>Warning: contains unnecessary lore.</p>
+          </div>
+
+          <div class="open-card" onclick="openModal('laugh')">
+            <div class="envelope">😂</div>
+            <h3>you need a laugh</h3>
+            <p>Proceed at your own risk.</p>
+          </div>
+
+          <div class="open-card" onclick="openModal('valuable')">
+            <div class="envelope">🤍</div>
+            <h3>you forget how valuable you are</h3>
+            <p>This one is important.</p>
+          </div>
+
+          <div class="open-card" onclick="openModal('allah')">
+            <div class="envelope">🌙</div>
+            <h3>you need a little faith</h3>
+            <p>A reminder about Allah and you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUSEUM -->
+    <section class="museum" id="museum">
+      <div class="container">
+        <div class="section-label">FILE 006 · OUR LITTLE MUSEUM</div>
+        <h2 class="section-title">Tiny things.<br>Big memories.</h2>
+        <p class="section-intro">Replace these placeholders with your actual photos.</p>
+
+        <div class="museum-grid">
+          <div class="memory-card" style="--rotation:-2deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>PANDORA</span></div>
+            <div class="memory-caption"><strong>The Pandora</strong><span>Still worn to this day.</span></div>
+          </div>
+
+          <div class="memory-card" style="--rotation:2deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>CAMERA</span></div>
+            <div class="memory-caption"><strong>The Camera</strong><span>Still safe. Still treasured.</span></div>
+          </div>
+
+          <div class="memory-card" style="--rotation:-1deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>SCRAPBOOK</span></div>
+            <div class="memory-caption"><strong>The Scrapbook</strong><span>Made by you. Kept by me.</span></div>
+          </div>
+
+          <div class="memory-card" style="--rotation:2deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>PROM</span></div>
+            <div class="memory-caption"><strong>The Prom</strong><span>You paid. I cried. You didn't enter.</span></div>
+          </div>
+
+          <div class="memory-card" style="--rotation:-2deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>CAR</span></div>
+            <div class="memory-caption"><strong>The Car</strong><span>Our unofficial therapy room.</span></div>
+          </div>
+
+          <div class="memory-card" style="--rotation:1deg">
+            <div class="memory-photo"><span>ADD PHOTO<br>MCFLURRY</span></div>
+            <div class="memory-caption"><strong>The McFlurry</strong><span>A very important historical artifact.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDENTITY -->
+    <section class="identity-section">
+      <div class="container">
+        <div class="section-label">FILE 007 · IF MET WAS...</div>
+        <h2 class="section-title">If Met was<br>something else.</h2>
+
+        <div class="identity-grid">
+          <div class="identity-card">
+            <small>COLOR</small>
+            <h3>Navy → Baby Blue</h3>
+            <p>Deep when you need to be. Soft when you feel safe.</p>
+          </div>
+
+          <div class="identity-card">
+            <small>WEATHER</small>
+            <h3>Sunset</h3>
+            <p>Orange mixed with pink. Warm, pretty, and slightly dramatic.</p>
+          </div>
+
+          <div class="identity-card">
+            <small>CHARACTER</small>
+            <h3>Young Sheldon × Sinchan</h3>
+            <p>Smart enough to know better. Chaotic enough to still do it anyway.</p>
+          </div>
+
+          <div class="identity-card">
+            <small>CAR</small>
+            <h3>Mini Cooper + Snorkel</h3>
+            <p>No explanation. Somehow completely accurate.</p>
+          </div>
+
+          <div class="identity-card">
+            <small>SONG</small>
+            <h3>Fix You</h3>
+            <p>Because sometimes you don't need someone to fix everything. You just need someone who stays.</p>
+          </div>
+
+          <div class="identity-card one-word">
+            <small>ONE WORD</small>
+            <h3>KEREN.</h3>
+            <p>You already know this. Don't let it get to your head.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AWARDS -->
+    <section class="awards" id="awards">
+      <div class="container">
+        <div class="section-label">FILE 008 · THE MET AWARDS</div>
+        <h2 class="section-title">Completely unofficial.<br>Extremely accurate.</h2>
+
+        <div class="award-list">
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Most Straightforward Human</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Best Facial Expression Betrayal</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Most Likely To Be Too Nice</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Best Gossip Department</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Most Productive Person Who Somehow Still Has Time For Everything</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Most Likely To Say Exactly What Everyone Else Was Thinking</div></div>
+          <div class="award"><div class="award-icon">🏆</div><div class="award-text">Best Friend for Almost Six Years</div></div>
+          <div class="award" style="margin-top:25px;background:var(--navy);color:white;">
+            <div class="award-icon">🏆</div>
+            <div class="award-text">Lifetime Achievement Award — For Being Met.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="final">
+      <div class="container">
+        <div class="final-content">
+          <div class="section-label" style="color:rgba(255,255,255,.45)">FILE 009 · END OF ARCHIVE</div>
+          <h2>Before you leave…</h2>
+
+          <p>Almost six years is a long time.</p>
+
+          <p>
+            We've changed.
+            We've grown.
+            We've gone through different versions of ourselves.
+          </p>
+
+          <p>
+            Maybe someday we'll be busier,
+            live different lives,
+            and won't talk as often as we do now.
+          </p>
+
+          <div class="final-highlight">
+            But I hope you always remember:
+            <br><br>
+            “I'm really glad I met you.”
+          </div>
+
+          <p>That person is me.</p>
+
+          <p>
+            Thank you for the Pandora bracelet.
+            For the camera.
+            For the scrapbook.
+            For the prom.
+            For the car rides.
+            For the McFlurrys.
+            For the gossip.
+            For the random conversations.
+            For showing up.
+            For simply being you.
+          </p>
+
+          <p>And whenever life gets heavy, come back here.</p>
+
+          <div class="final-highlight">Allah is always with you.</div>
+
+          <p>
+            And somewhere in this world,
+            there's a human being who is always praying
+            that you'll be okay.
+          </p>
+
+          <div class="signature">Me. 🤍</div>
+
+          <div style="margin-top:35px;font-family:var(--mono);font-size:12px;opacity:.5;">
+            HAPPY BIRTHDAY, MET.
+          </div>
+
+          <button class="btn replay" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            ↻ Replay the archive
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      THE MET ARCHIVE · ALMOST SIX YEARS · MADE WITH LOVE
+    </footer>
+  </main>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    /* PASSWORD */
+    const SECRET_PASSWORD = "met2026";
+
+    function unlockArchive() {
+      const input = document.getElementById("password-input");
+      const wrong = document.getElementById("wrong-password");
+
+      if (input.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
+        document.getElementById("password-screen").classList.add("hidden");
+        createConfetti();
+      } else {
+        wrong.textContent = "Hmm… that's not the password 👀";
+        input.value = "";
+      }
+    }
+
+    document.getElementById("password-input").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") unlockArchive();
+    });
+
+    /* MODAL CONTENT */
+    const modalData = {
+      strong: {
+        title: "You are stronger than you think.",
+        content: `
+          <p>Aku rasa kamu nggak selalu sadar seberapa kuat dirimu.</p>
+          <p>Bukan berarti kamu nggak pernah sedih, takut, bingung, kecewa, atau capek.</p>
+          <p>Justru karena kamu pernah merasakan semua itu dan tetap berusaha menjalani hidupmu, menurutku itu bentuk kekuatan.</p>
+          <p>You keep going.</p>
+          <p>And I think that's strength.</p>
+        `
+      },
+
+      kind: {
+        title: "Your kindness has an impact.",
+        content: `
+          <p>Kamu mungkin menganggap kebaikanmu sebagai sesuatu yang biasa.</p>
+          <p>Tapi aku melihat bagaimana caramu memperlakukan orang bisa membuat orang lain ingin menjadi lebih baik juga.</p>
+          <p>Aku salah satunya.</p>
+        `
+      },
+
+      inspire: {
+        title: "You inspire me.",
+        content: `
+          <p>Terutama dari bagaimana kamu berusaha menjalani hidupmu, menjadi produktif, bermanfaat, dan menjaga hubunganmu dengan Allah.</p>
+          <p>Kamu mungkin nggak pernah bermaksud menjadi contoh buat siapapun.</p>
+          <p>But somehow, you became one for me.</p>
+        `
+      },
+
+      boundaries: {
+        title: "Please learn to bodo amat.",
+        content: `
+          <p>Met.</p>
+          <p>Please.</p>
+          <p><strong>BODO AMAT SEDIKIT 😭</strong></p>
+          <p>Tidak semua orang harus kamu pikirkan. Tidak semua orang harus kamu pahami. Tidak semua orang pantas mendapatkan akses ke hati kamu.</p>
+          <p>Being kind doesn't mean you have to tolerate everything.</p>
+        `
+      },
+
+      loved: {
+        title: "You are loved.",
+        content: `
+          <p>Not because you're productive.</p>
+          <p>Not because you're smart.</p>
+          <p>Not because you're useful.</p>
+          <p>But simply because you're you.</p>
+          <p>And I hope you never forget that.</p>
+        `
+      },
+
+      sad: {
+        title: "For the days you're sad.",
+        content: `
+          <p>Met,</p>
+          <p>kalau kamu sedang sedih, please don't force yourself to immediately be okay.</p>
+          <p>Istirahat dulu. Nangis kalau perlu. Cerita kalau mau.</p>
+          <p>Dan ingat: <strong>Allah selalu bersama kamu.</strong></p>
+          <p>Kamu nggak sendirian.</p>
+          <p>Kalau kamu butuh manusia biasa untuk mendengarkan semua cerita kamu, pintuku selalu terbuka.</p>
+          <p>Aku mungkin nggak selalu punya solusi, tapi aku bisa menemani.</p>
+          <p>— your human bestie 🤍</p>
+        `
+      },
+
+      "not-enough": {
+        title: "You are enough.",
+        content: `
+          <p>Kamu nggak harus selalu produktif untuk menjadi berharga.</p>
+          <p>Kamu nggak harus selalu kuat.</p>
+          <p>Kamu nggak harus selalu tahu harus melakukan apa.</p>
+          <p>Your worth doesn't disappear just because you're having a bad day.</p>
+          <p>Istirahat bukan berarti gagal.</p>
+          <p>Pelan bukan berarti tertinggal.</p>
+        `
+      },
+
+      "miss-me": {
+        title: "So you miss me?",
+        content: `
+          <p>HAHAHAHA akhirnya kangen juga.</p>
+          <p>Coba lihat museum kita.</p>
+          <p>Ingat mobil. Ingat McFlurry. Ingat prom. Ingat meja Sosro.</p>
+          <p>Ingat dua manusia yang pernah ngobrolin hidup sampai warna celana dalam.</p>
+          <p>So if we're busy or far away someday:</p>
+          <p><strong>We're still us.</strong></p>
+        `
+      },
+
+      laugh: {
+        title: "Emergency Laugh Department.",
+        content: `
+          <p>🏆 Cabe Rawit Award</p>
+          <p>🚗 Margonda Flyover Incident</p>
+          <p>🍜 Mie + Nasi Incident</p>
+          <p>🩲 Underwear Color Discussion</p>
+          <p>🍦 McFlurry Era</p>
+          <p>🏫 IPA → IPS Migration</p>
+          <p>🏛️ Prom But Didn't Enter The Building</p>
+          <p>Honestly, we have enough material for several documentaries.</p>
+        `
+      },
+
+      valuable: {
+        title: "Please remember this.",
+        content: `
+          <p>If you ever forget how valuable you are, come back here.</p>
+          <p>You have been a good friend to me.</p>
+          <p>You have made me laugh. You have shown up. You have given. You have cared. You have inspired me.</p>
+          <p>And you have left traces of yourself in my life that I still carry today.</p>
+          <p>So yes, Met.</p>
+          <p><strong>You matter.</strong></p>
+          <p>More than you probably realize.</p>
+        `
+      },
+
+      allah: {
+        title: "When you need a little faith.",
+        content: `
+          <p>Kalau suatu hari kamu merasa sendirian, ingat bahwa Allah selalu bersama kamu.</p>
+          <p>Allah tahu hal-hal yang tidak bisa kamu ceritakan kepada siapapun.</p>
+          <p>Allah tahu usaha yang orang lain nggak lihat.</p>
+          <p>Allah tahu doa-doa yang cuma kamu simpan sendiri.</p>
+          <p>Jadi jangan takut dengan masa depan. Jalani satu-satu. Doakan satu-satu. Serahkan yang tidak bisa kamu kendalikan kepada Allah.</p>
+          <p>Dan kalau kamu tetap butuh seseorang untuk cerita, aku ada.</p>
+          <p>Aku mungkin cuma manusia biasa, tapi aku akan selalu mendoakan kamu.</p>
+          <p>🤍</p>
+        `
+      }
+    };
+
+    function openModal(type) {
+      const data = modalData[type];
+      if (!data) return;
+
+      document.getElementById("modal-title").innerHTML = data.title;
+      document.getElementById("modal-content").innerHTML = data.content;
+      document.getElementById("modal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(event) {
+      if (event && event.target !== document.getElementById("modal")) return;
+      document.getElementById("modal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") closeModal();
+    });
+
+    /* CONFETTI */
+    function createConfetti() {
+      const pieces = 70;
+
+      for (let i = 0; i < pieces; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = (Math.random() * 2 + 2.5) + "s";
+        confetti.style.animationDelay = Math.random() * .8 + "s";
+
+        const colors = ["#dcecf5", "#e7b8bb", "#e5a16d", "#ffffff"];
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4500);
+      }
+    }
+  </script>
+</body>
+</html>
