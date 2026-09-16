@@ -1127,6 +1127,7 @@
   <script>
     /* PASSWORD */
     /* PASSWORD */
+/* PASSWORD */
 const SECRET_PASSWORD = "met2026";
 
 function unlockArchive() {
@@ -1139,13 +1140,12 @@ function unlockArchive() {
   } else {
     wrong.textContent = "Hmm... that's not the password 👀";
     input.value = "";
-      }
-    }
+  }
+}
 
-    document.getElementById("password-input").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") unlockArchive();
-    });
-
+document.getElementById("password-input").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") unlockArchive();
+});
     /* MODAL CONTENT */
     const modalData = {
       strong: {
