@@ -1325,18 +1325,6 @@
     }
     const SECRET_PASSWORD = "met2026";
 
-function unlockArchive() {
-  const input = document.getElementById("password-input");
-  const wrong = document.getElementById("wrong-password");
-
-  if (input.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
-    document.getElementById("password-screen").classList.add("hidden");
-    createConfetti();
-  } else {
-    wrong.textContent = "Hmm... that's not the password 👀";
-    input.value = "";
-  }
-}
   </script>
 </body>
 </html>
